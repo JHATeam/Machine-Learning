@@ -3,4 +3,4 @@
 - flask: 3.0.0
 
 # Run flask in docker
-## 
+- docker-compose up --build
