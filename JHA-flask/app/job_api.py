@@ -39,6 +39,6 @@ def update_job(id):
 @api_bp.route('/create', methods=['POST'])
 def create_job():
     try:
-        return create_job(request.get_json())
+        return job_service.create_job(request.get_json())
     except:
         abort(404)

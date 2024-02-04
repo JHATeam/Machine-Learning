@@ -19,6 +19,7 @@ def create_job(job):
     job['summary'] = "create from GPT"
     jobs.append(job)
     save_jobs(jobs)
+    return job
 
 
 def update_job(id, new_job):
