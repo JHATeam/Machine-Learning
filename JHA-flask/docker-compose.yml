@@ -1,0 +1,13 @@
+version: "3"
+services:
+    flask:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: flaskapp
+        working_dir: /
+        ports:
+            - "8080:8080"
+        environment:
+            - FLASK_APP=app
+        command: flask run --host=0.0.0.0 --port=8080
