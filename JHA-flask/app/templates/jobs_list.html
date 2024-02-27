@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Jobs{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+{% for job in jobs %}
+<div class="card">
+    <div class="card-body">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="flex: auto">
+                <h5 class="card-title">{{ job.title }} - {{job.id}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ job.company }} - {{ job.location }} - {{job.date}}</h6>
+            </div>
+            <div style="flex: initial; margin-inline:10px"><a href="{{ url_for('jobs.update_job', id=job.id) }}"
+                    class="btn btn-primary">Edit</a></div>
+            <div style="flex: initial; margin-inline:10px"><a href="{{ url_for('jobs.delete_job', id=job.id) }}"
+                    class="btn btn-primary">Delete</a></div>
+        </div>
+        <br />
+        <div>
+            <h6 class="card-subtitle mb-2 text-info">Job Description:</h6>
+            <p class="card-text">{{ job.description }}</p>
+        </div>
+        <br />
+        <h6 class="card-subtitle mb-2 text-info">Summary:</h6>
+        <p class="card-text">{{ job.summary | safe}}</p>
+    </div>
+</div>
+<br />
+{% endfor %}
+
+{% endblock %}

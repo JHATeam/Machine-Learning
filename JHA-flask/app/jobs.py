@@ -16,11 +16,32 @@ class JobForm(FlaskForm):
     description = TextAreaField('Job Description')
 
 
-@jobs_bp.route('/')
+@jobs_bp.route('/', methods=['GET', 'POST'])
+def generate_job_summary():
+    try:
+        form = JobForm()
+        if form.validate_on_submit():
+            job = {
+                'description': form.description.data,
+                'date': datetime.now().strftime('%Y-%m-%d'),
+                'summary': "please input your job description!",
+            }
+            if job['description'] != "":
+                js = job_service.get_job_summary(job)
+                print(js[0].json)
+                job['summary'] = js['html'] if isinstance(
+                    js, dict) else js[0].json["error"]
+            return render_template('index.html', form=form, job=job)
+        return render_template('index.html', form=form)
+    except:
+        abort(404)
+
+
+@jobs_bp.route('/jobs', methods=['GET'])
 def get_all_jobs():
     try:
         jobs = job_service.get_all_jobs()
-        return render_template("index.html", jobs=jobs)
+        return render_template("jobs_list.html", jobs=jobs)
     except:
         abort(404)
 
@@ -55,7 +76,7 @@ def update_job(id):
             form.location.data = job['location']
             form.description.data = job['description']
 
-            return render_template('update.html', form=form, id=id)
+            return render_template('create.html', operation="Update", form=form, id=id)
         else:
             return redirect(url_for("jobs.get_all_jobs"))
     except:
@@ -76,6 +97,6 @@ def create_job():
             }
             job_service.create_job(job)
             return redirect(url_for("jobs.get_all_jobs"))
-        return render_template('create.html', form=form)
+        return render_template('create.html', operation="Create", form=form)
     except:
         abort(404)
