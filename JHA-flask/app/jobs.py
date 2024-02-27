@@ -28,7 +28,6 @@ def generate_job_summary():
             }
             if job['description'] != "":
                 js = job_service.get_job_summary(job)
-                print(js[0].json)
                 job['summary'] = js['html'] if isinstance(
                     js, dict) else js[0].json["error"]
             return render_template('index.html', form=form, job=job)
