@@ -27,7 +27,7 @@ def get_job_summary(job):
     # TODO: Update with AI service
     try:
         response = requests.get(
-            'https://my-json-server.typicode.com/Slothbetty/SampleSummaryJsonData/job_summary0')
+            'https://my-json-server.typicode.com/Slothbetty/SampleSummaryJsonData/job_summary')
         if response.status_code == 200:
             return response.json()
         else:
