@@ -1,0 +1,9 @@
+Hi ChatGPT, could you extract the keywords/values, keyword phrases/values or key sentences from the job description below and output the response in the required format.
+If the job description has any numbers or information related to job salary, working location, working remote or not, please also include it.
+
+This is the job description:
+{text} 
+
+This is the output format:
+{format}
+

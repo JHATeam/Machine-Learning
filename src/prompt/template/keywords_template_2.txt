@@ -1,0 +1,9 @@
+Hi ChatGPT, could you extract the keywords/values, keyword phrases/values or key sentences from the resume below and output the response in the required format.
+If the resume has any numbers or information related to salary, working location, working remote or not, please also include it.
+
+This is the resume:
+{text} 
+
+This is the output format:
+{format}
+

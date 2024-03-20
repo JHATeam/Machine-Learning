@@ -1,0 +1,69 @@
+About the job
+Job Number: 64217
+
+Group: Magna Corporate
+
+Division: Magna Services of America (Troy Office)
+
+Job Type: Intern/Co-op
+
+Location: TROY
+
+Work Style:
+
+About Us
+
+We see a future where everyone can live and move without limitations. That’s why we are developing technologies, systems and concepts that make vehicles safer and cleaner, while serving our communities, the planet and, above all, people.
+
+Forward. For all.
+
+Group Summary
+
+Magna is more than one of the world’s largest suppliers in the automotive space. We are a mobility technology company built to innovate, with a global, entrepreneurial-minded team. With 65+ years of expertise, our ecosystem of interconnected products combined with our complete vehicle expertise uniquely positions us to advance mobility in an expanded transportation landscape.
+
+About The Role
+
+The candidate will work closely with Data Scientists on multiple data analytics/AI use cases. The projects will include analysis of large data sets to derive insights for business or engineering decisions and prognostics and health monitoring in manufacturing setting. The candidate should be familiar with data workflows including data discovery, ingestion, filtering, transformation, model creation, model deployment and model maintenance. Understanding and knowledge of big data technologies and platforms (GCP, Azure, AWS) is expected. Knowledge of Python/R, and relevant math/statistics and machine learning techniques is expected.
+
+Your Responsibilities
+
+The candidate will:
+
+ Perform and present data analysis based on requests from customers.
+ Talk to customers and define problem statements for Smart Manufacturing.
+ Develop solutions that can be compared to a given baseline solution.
+ Create data pipeline in one of the popular cloud platforms.
+ Test and evaluate the developed solutions.
+ Present technical results and provide recommendation based on the case study.
+
+
+
+Who We Are Looking For
+
+ Graduate student (Ph.D. preferred) of mechanical engineering, electrical engineering, or computer engineering/science, or equivalent engineering, math or science discipline.
+ Strong Python and/or R programming experience is required.
+ Familiarity with Big data platforms required.
+ Experience with Big data technologies preferred.
+
+
+
+Your Preferred Qualifications
+
+ Currently attending a College or University, preferably a graduate student.
+ Proficient Computer knowledge and skills, Microsoft Office (Word, Excel, PowerPoint)
+ Strong technical and analytical skills.
+ Ability to work on complex engineering systems with creative ways.
+ Proficient in Microsoft Office Products (Excel, Word, Power Point)
+ Professional Communication skills (written and verbal).
+
+
+
+What We Offer
+
+At Magna, you can expect an engaging and dynamic environment where you can help to develop industry-leading automotive technologies. We invest in our employees, providing them with the support and resources they need to succeed. As a member of our global team, you can expect exciting, varied responsibilities as well as a wide range of development prospects. Because we believe that your career path should be as unique as you are.
+
+Site Benefits
+
+Awareness. Unity. Empowerment.
+
+At Magna, we believe that a diverse workforce is critical to our success. That’s why we are proud to be an equal opportunity employer. We hire on the basis of experience and qualifications, and in consideration of job requirements, regardless of, in particular, color, ancestry, religion, gender, origin, sexual orientation, age, citizenship, marital status, disability or gender identity. Magna takes the privacy of your personal information seriously. We discourage you from sending applications via email to comply with GDPR requirements and your local Data Privacy Law.
