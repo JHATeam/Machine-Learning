@@ -1,0 +1,15 @@
+Given the user's feedback and the previous summary of their inquiry, 
+please integrate the feedback to refine or update the summary. 
+Your goal is to generate a new, improved summary that accurately reflects both the original inquiry points and the user's feedback. 
+Present the new summary in a clear and concise manner.
+
+Please follow the output format below in the response, only include the updated summary in response:
+
+User's Feedback:
+{text}
+
+Previous Summary:
+{previous_summary}
+
+Output format
+{format}

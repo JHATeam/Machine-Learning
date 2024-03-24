@@ -1,0 +1,14 @@
+Hi ChatGPT, here is a user's input that might consist of one or more statements or questions, 
+which could be unrelated or not presented in a sequential order, 
+your task is to dissect the input into its constituent elements. 
+Each distinct statement or question should be identified, summarized, and listed as a separate point. 
+The aim is to capture the essence of each part of the user's input accurately, 
+presenting them as clear, concise summaries in a bullet-point format for user to review.
+
+Please follow the output format below in the response:
+
+User's Input:
+{text}
+
+Output format
+{format}

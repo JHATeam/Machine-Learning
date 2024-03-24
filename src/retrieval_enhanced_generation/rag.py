@@ -12,6 +12,7 @@ import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+import re
 from config.config import Config
 from data_io.read_txt import ReadTXT
 from models.chatgpt_client import ChatGPTClient
@@ -19,8 +20,13 @@ from embedder.text_embedder import TextEmbedder
 from vector_storage.vector_store import VectorStore
 from job_description_process.job_description_processor import JobDescriptionProcessor
 
-prompt_text = ReadTXT.read_file("prompt/template/keywords_template_2.txt")
+keywords_prompt_template = ReadTXT.read_file("prompt/template/keywords_template_2.txt")
 output_format = ReadTXT.read_file("prompt/format/output_format.txt")
+
+user_inquire_template = ReadTXT.read_file("prompt/template/user_inquire_template.txt")
+user_inquire_template_2 = ReadTXT.read_file("prompt/template/user_inquire_template_2.txt")
+output_format_2 = ReadTXT.read_file("prompt/format/output_format_2.txt")
+output_format_3 = ReadTXT.read_file("prompt/format/output_format_3.txt")
 
 folder_path = "data/job_description"
 dimension = 384
@@ -54,6 +60,11 @@ class ChatResume:
             {format} 
         """
 
+        # Initialize variables to track the conversation state
+        self.is_first_inquiry = True  # Whether it's the user's first inquiry
+        self.summary_confirmed = False  # Whether the user has confirmed the summary
+        self.inquiry_summary = ""  # Store the summary of the inquiry
+
     def ingest(self, pdf_file_path: str):
         docs = PyPDFLoader(file_path=pdf_file_path).load()
         chunks = self.text_splitter.split_documents(docs) #split the docs according to the resume section in next step.
@@ -61,7 +72,8 @@ class ChatResume:
 
         query_keywords = []
         for chunk in chunks:
-            response = self.model.query(prompt_text, chunk.page_content, output_format)
+            response = self.model.query(keywords_prompt_template, chunk.page_content, output_format)
+            response = response.choices[0].message['content'].split(", ")
             query_keywords.extend(response)
         print(query_keywords)
 
@@ -79,13 +91,54 @@ class ChatResume:
         if not self.context:
             return "Please, add a PDF resume first."
         
+        # If it's the user's first inquiry
+        if self.is_first_inquiry:
+            # Use a prompt to generate a summary of the user's inquiry
+
+            response = self.model.query(user_inquire_template, user_query, output_format_2)
+            self.inquiry_summary = [re.sub(r"^[*-,.]|[*-,.]$", "", line.strip()) for line in response.choices[0].message['content'].split("\n")]
+            self.is_first_inquiry = False  # Update the flag
+            
+            summary_str = "\n".join(self.inquiry_summary)
+            message = f"We have summarized your inquiry as follows, please confirm or suggest modifications (reply yes or satisfied for confirmation, reply others for modifications):\n{summary_str}"
+            return message
+        
+        # If the user has not confirmed the summary yet
+        if not self.summary_confirmed:
+            # Check if the user is suggesting modifications
+            if "Yes" in user_query or "satisfied" in user_query:
+                self.summary_confirmed = True  # User has confirmed the summary
+            else:
+                # Assuming here we update the summary based on user feedback
+             
+                previous_summary = "\n".join(self.inquiry_summary)
+                user_inquire_template_2_update = user_inquire_template_2.format(text="{text}", previous_summary=previous_summary, format="{format}")
+                print(user_inquire_template_2_update)
+                response = self.model.query(user_inquire_template_2_update, user_query, output_format_3)
+                self.inquiry_summary = [re.sub(r"^[*-,.]|[*-,.]$", "", line.strip()) for line in response.choices[0].message['content'].split("\n")]
+                
+                summary_str = "\n".join(self.inquiry_summary)
+                message = f"According to your feedback, we have summarized your inquiry as follows, please confirm or suggest modifications (reply yes or satisfied for confirmation, reply others for modifications): \n{summary_str}"
+                return message
+        
+        # If the user has confirmed the summary, handle user inquiry from summary
+        if self.summary_confirmed:
+            # Here, handle the user's inquiry based on the confirmed summary
+            summary_str = "\n".join(self.inquiry_summary)
+            message = f"According to your feedback, these are the final summary of your inquiry: \n{summary_str}"
+            return message
+
+
+        """
         self.question = user_query
         response = self.model.query(self.prompt_text, self.context, self.question)
+        response = response.choices[0].message['content'].split(", ")
         response = ". ".join(response)
         print("*" * 100)
-        print(response)
+        print(response) 
         
         return response
+        """
 
     def clear(self):
         self.vector_store = None
