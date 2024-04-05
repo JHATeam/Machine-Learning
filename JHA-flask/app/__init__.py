@@ -1,7 +1,8 @@
 from flask import Flask, render_template
-from app.config import Config, ProductionConfig
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField
+
+from app.config import Config, ProductionConfig
 
 
 class JobForm(FlaskForm):

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Generate Summary{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+        {{ form.description.label }}
+        {{ form.description(class="form-control") }}
+    </div>
+    <button type="submit" class="btn btn-primary">Generate Job Summary</button>
+</form>
+{% if job is defined %}
+<br />
+<h6 class="card-subtitle mb-2 text-info">Summary - {{job.date}}</h6>
+<div id="dynamic_div_summary">{{job.summary | safe}}</div>
+{% endif %}
+{% endblock %}
