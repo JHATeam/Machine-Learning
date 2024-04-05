@@ -15,6 +15,7 @@ class JobForm(FlaskForm):
     company = StringField('Company')
     location = StringField('Location')
     description = TextAreaField('Job Description')
+    skills = TextAreaField('Required Skills')
 
 
 @jobs_bp.route('/', methods=['GET', 'POST'])
@@ -28,6 +29,7 @@ def generate_job_summary():
                     'company': "TODO: company",
                     'location': "TODO: location",
                     'description': form.description.data,
+                    'skills': "TODO: skills",
                     'date': datetime.now().strftime('%Y-%m-%d'),
                 }
                 job_service.create_job(job)
@@ -67,6 +69,7 @@ def update_job(id):
                 'company': form.company.data,
                 'location': form.location.data,
                 'description': form.description.data,
+                'skills': form.skills.data,
                 'date': datetime.now().strftime('%Y-%m-%d')
             }
             job_service.update_job(id, new_job)
@@ -94,6 +97,7 @@ def create_job():
                 'company': form.company.data,
                 'location': form.location.data,
                 'description': form.description.data,
+                'skills': form.skills.data,
                 'date': datetime.now().strftime('%Y-%m-%d')
             }
             job_service.create_job(job)

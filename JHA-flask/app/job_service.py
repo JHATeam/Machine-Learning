@@ -1,5 +1,5 @@
 from flask import current_app, jsonify
-import requests
+import app.chat_openai as chat_openai
 
 
 def get_all_jobs():
@@ -17,7 +17,11 @@ def create_job(job):
     else:
         job['id'] = max([job['id'] for job in jobs]) + 1
     job_summary = get_job_summary(job)
-    job['summary'] = job_summary['html']
+    job['summary'] = job_summary['summary']
+    job['title'] = job_summary['title']
+    job['company'] = job_summary['company']
+    job['location'] = job_summary['location']
+    job['skills'] = job_summary['skills']
     jobs.append(job)
     save_jobs(jobs)
     return job
@@ -26,12 +30,13 @@ def create_job(job):
 def get_job_summary(job):
     # TODO: Update with AI service
     try:
-        response = requests.get(
-            'https://my-json-server.typicode.com/Slothbetty/SampleSummaryJsonData/job_summary')
-        if response.status_code == 200:
-            return response.json()
-        else:
-            return jsonify({'error': 'Failed to retrieve data from API'}), 500
+        return chat_openai.tagging_job_description(job['description'])
+        # response = requests.get(
+        #     'https://my-json-server.typicode.com/Slothbetty/SampleSummaryJsonData/job_summary')
+        # if response.status_code == 200:
+        #     return response.json()
+        # else:
+        #     return jsonify({'error': 'Failed to retrieve data from API'}), 500
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
