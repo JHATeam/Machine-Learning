@@ -1,8 +1,7 @@
 from datetime import datetime
-
-from flask import Blueprint, abort, redirect, render_template, url_for
+from flask import Blueprint, abort, redirect, render_template, url_for, request, flash
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField
+from wtforms import StringField, TextAreaField, SelectMultipleField, widgets, SubmitField
 
 from app import job_service
 
@@ -15,6 +14,16 @@ class JobForm(FlaskForm):
     company = StringField('Company')
     location = StringField('Location')
     description = TextAreaField('Job Description')
+
+
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
+
+
+class MultiCheckboxForm(FlaskForm):
+    check_options = MultiCheckboxField('Routes', coerce=int)
+    submit = SubmitField("Set User Choices")
 
 
 @jobs_bp.route('/', methods=['GET', 'POST'])
@@ -101,3 +110,34 @@ def create_job():
         return render_template('create.html', operation="Create", form=form)
     except:
         abort(404)
+
+
+@jobs_bp.route("/skills", methods=["GET", "POST"])
+def example():
+    form = MultiCheckboxForm()
+    programming_skills = [
+        (1, "Python"),
+        (2, "JavaScript"),
+        (3, "Java"),
+        (4, "C++"),
+        (5, "HTML/CSS"),
+        (6, "SQL"),
+        (7, "Ruby"),
+        (8, "PHP"),
+        (9, "C#"),
+        (10, "Swift"),
+        # Add more programming skills as needed
+    ]
+
+    user_choices = [(3, "Java"), (4, "C++")]
+    form.check_options.choices = [(c[0], c[1]) for c in programming_skills]
+    if request.method == 'POST' and form.validate_on_submit():
+        accepted = []
+        for choice in programming_skills:
+            if choice[0] in form.check_options.data:
+                accepted.append(choice)
+        flash("You selected: " + ", ".join([skill[1] for skill in accepted]))
+        return render_template('skills.html', form=form)
+    else:
+        form.check_options.data = [c[0] for c in user_choices]
+        return render_template('skills.html', form=form)
